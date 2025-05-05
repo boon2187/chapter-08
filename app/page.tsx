@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Post } from "./types";
+import { Post } from "../types";
 import Link from "next/link";
 import Card from "@/components/Card";
 

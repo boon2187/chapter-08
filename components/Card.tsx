@@ -1,4 +1,4 @@
-import { Post } from "@/app/types";
+import { Post } from "@/types";
 import { format } from "date-fns";
 import DOMPurify from "dompurify";
 
