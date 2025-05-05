@@ -1,3 +1,5 @@
+"use client";
+
 import { Post } from "@/types";
 import { format } from "date-fns";
 import DOMPurify from "dompurify";
