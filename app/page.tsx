@@ -31,8 +31,14 @@ export default function Home() {
     );
   }
   return (
-    <div>
-      <div>{posts.map((post) => post.title)}</div>
+    <div className="container mx-auto mt-10">
+      <ul className="flex-1 w-full flex flex-col items-center">
+        {posts.map((post) => (
+          <li key={post.id} className="mb-t w-1/2 p-4">
+            {post.title}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
