@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Post } from "./types";
+import Link from "next/link";
+import Card from "@/components/Card";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -35,7 +37,9 @@ export default function Home() {
       <ul className="flex-1 w-full flex flex-col items-center">
         {posts.map((post) => (
           <li key={post.id} className="mb-t w-1/2 p-4">
-            {post.title}
+            <Link href={`/posts/${post.id}`}>
+              <Card post={post} />
+            </Link>
           </li>
         ))}
       </ul>
