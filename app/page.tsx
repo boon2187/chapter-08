@@ -17,7 +17,6 @@ export default function Home() {
           "https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts"
         );
         const data = await response.json();
-        console.log("取得したポストデータ", data.posts);
         setPosts(data.posts);
       } finally {
         setIsLoading(false);
