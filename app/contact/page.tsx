@@ -1,13 +1,13 @@
 "use client";
 
-import Input from "@/components/Input";
-import Label from "@/components/Label";
-import Textarea from "@/components/Textarea";
-import { contactFormSchema } from "@/schemas/ContactForm";
-import { ContactFormData } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { ContactFormData } from "../_types";
+import { contactFormSchema } from "../_schemas/ContactForm";
+import Label from "../_components/Label";
+import Input from "../_components/Input";
+import Textarea from "../_components/Textarea";
 
 export default function Contact() {
   const [showValidation, setShowValidation] = useState(false);

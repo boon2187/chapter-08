@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Post } from "../types";
 import Link from "next/link";
-import Card from "@/components/Card";
+import { Post } from "./_types";
+import Card from "./_components/Card";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);

@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Post } from "@/types";
 import { format } from "date-fns";
 import DOMPurify from "dompurify";
 import Image from "next/image";
+import { Post } from "@/app/_types";
 
 export default function PostPage({ params }: { params: { id: string } }) {
   const [post, setPost] = useState<Post | null>(null);
