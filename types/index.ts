@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { contactFormSchema } from "@/schemas/ContactForm";
+
 // 日付を表す型
 export type DateType = Date | string;
 
@@ -10,3 +13,6 @@ export interface Post {
   categories: string[];
   content: string;
 }
+
+// スキーマから型を推論
+export type ContactFormData = z.infer<typeof contactFormSchema>;
