@@ -3,6 +3,7 @@
 import { format } from "date-fns";
 import DOMPurify from "dompurify";
 import { MicroCmsPost } from "../_types";
+import Image from "next/image";
 
 export default function Card({ post }: { post: MicroCmsPost }) {
   const sanitizedContent = DOMPurify.sanitize(post.content);
@@ -26,6 +27,12 @@ export default function Card({ post }: { post: MicroCmsPost }) {
         <div
           className="line-clamp-2"
           dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+        />
+        <Image
+          src={post.thumbnail.url}
+          alt={post.title}
+          width={800}
+          height={400}
         />
       </div>
     </div>
