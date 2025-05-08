@@ -14,16 +14,23 @@ export default function Home() {
       setIsLoading(true);
       try {
         const response = await fetch(
-          "https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts"
+          "https://dnhdijq6eh.microcms.io/api/v1/posts",
+          {
+            headers: {
+              "X-MICROCMS-API-KEY":
+                process.env.NEXT_PUBLIC_MICROCMS_API_KEY || "",
+            },
+          }
         );
-        const data = await response.json();
-        setPosts(data.posts);
+        const { contents } = await response.json();
+        setPosts(contents);
       } finally {
         setIsLoading(false);
       }
     };
     fetchPosts();
   }, []);
+
   if (isLoading) {
     return (
       <div className="h-screen flex items-center justify-center">
