@@ -15,7 +15,7 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "My Blog App",
-  description: "ShiftB Chapter 8",
+  description: "ShiftB Chapter 9",
 };
 
 export default function RootLayout({
