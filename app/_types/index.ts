@@ -20,7 +20,7 @@ export interface MicroCmsPost {
   content: string;
   createdAt: string;
   categories: { id: string; name: string }[];
-  thumbnailUrl: { url: string; height: number; width: number };
+  thumbnail: { url: string; height: number; width: number };
 }
 
 // スキーマから型を推論
