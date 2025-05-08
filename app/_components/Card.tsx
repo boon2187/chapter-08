@@ -1,10 +1,10 @@
 "use client";
 
-import { Post } from "@/types";
 import { format } from "date-fns";
 import DOMPurify from "dompurify";
+import { MicroCmsPost } from "../_types";
 
-export default function Card({ post }: { post: Post }) {
+export default function Card({ post }: { post: MicroCmsPost }) {
   const sanitizedContent = DOMPurify.sanitize(post.content);
   return (
     <div className="border border-gray-300 p-4 rounded-lg hover:bg-gray-50 transition-colors">
@@ -16,7 +16,7 @@ export default function Card({ post }: { post: Post }) {
               key={index}
               className="border border-blue-300 text-blue-500 p-1 rounded-md"
             >
-              {category}
+              {category.name}
             </span>
           ))}
         </div>
