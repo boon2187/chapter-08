@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import DOMPurify from "dompurify";
 import Image from "next/image";
-import { Post } from "@/app/_types";
+import { MicroCmsPost } from "@/app/_types";
 
 export default function PostPage({ params }: { params: { id: string } }) {
-  const [post, setPost] = useState<Post | null>(null);
+  const [post, setPost] = useState<MicroCmsPost | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -15,10 +15,16 @@ export default function PostPage({ params }: { params: { id: string } }) {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts/${params.id}`
+          `https://dnhdijq6eh.microcms.io/api/v1/posts/${params.id}`,
+          {
+            headers: {
+              "X-MICROCMS-API-KEY":
+                process.env.NEXT_PUBLIC_MICROCMS_API_KEY || "",
+            },
+          }
         );
         const data = await response.json();
-        setPost(data.post);
+        setPost(data);
       } finally {
         setIsLoading(false);
       }
@@ -46,7 +52,7 @@ export default function PostPage({ params }: { params: { id: string } }) {
     <div className="flex flex-col max-w-[800px] mt-12 mx-auto">
       {/* <img src={post.thumbnailUrl} alt={post.title} /> */}
       <Image
-        src={post.thumbnailUrl}
+        src={post.thumbnail.url}
         alt={post.title}
         width={800}
         height={400}
@@ -62,7 +68,7 @@ export default function PostPage({ params }: { params: { id: string } }) {
                 key={index}
                 className="border border-blue-300 text-blue-500 p-1 rounded-md"
               >
-                {category}
+                {category.name}
               </span>
             ))}
           </div>

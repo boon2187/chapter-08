@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { contactFormSchema } from "@/schemas/ContactForm";
+import { contactFormSchema } from "../_schemas/ContactForm";
 
 // 日付を表す型
 export type DateType = Date | string;
@@ -12,6 +12,15 @@ export interface Post {
   createdAt: DateType;
   categories: string[];
   content: string;
+}
+
+export interface MicroCmsPost {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  categories: { id: string; name: string }[];
+  thumbnail: { url: string; height: number; width: number };
 }
 
 // スキーマから型を推論
