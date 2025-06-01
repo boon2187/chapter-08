@@ -38,3 +38,5 @@ next-env.d.ts
 # microcms
 .env
 .env.local
+
+/app/generated/prisma
