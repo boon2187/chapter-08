@@ -46,7 +46,7 @@ export const GET = async (
         { status: 404 }
       );
     }
-    return NextResponse.json({ status: "ok", post: post }, { status: 200 });
+    return NextResponse.json({ status: "OK", post: post }, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ status: error.message }, { status: 400 });
