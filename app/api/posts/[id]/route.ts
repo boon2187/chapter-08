@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 // 記事一覧の取得API(GET)
 export const GET = async (
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) => {
   try {
