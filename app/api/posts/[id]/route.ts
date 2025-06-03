@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-// 記事一覧の取得API(GET)
+// 記事の詳細取得API(GET)
 export const GET = async (
   request: NextRequest,
   { params }: { params: { id: string } }
