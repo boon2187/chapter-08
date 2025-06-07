@@ -58,7 +58,6 @@ export const POST = async (request: NextRequest) => {
         title,
         content,
         thumbnailUrl,
-        slug: title.toLowerCase().replace(/\s+/g, "-"), // titleからslugを生成
       },
     });
 

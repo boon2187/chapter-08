@@ -16,7 +16,6 @@ model Post {
   title           String
   content         String
   thumbnailUrl    String
-  slug            String   @unique
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   postCategories  PostCategory[]
