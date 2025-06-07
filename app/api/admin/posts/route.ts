@@ -1,7 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+
+// 記事の型のinterface
+interface CreatePostRequestBody {
+  title: string;
+  content: string;
+  thumbnailUrl: string;
+  postCategories: { categoryId: number }[];
+}
 
 // 記事一覧の取得API(GET)
 export const GET = async () => {
@@ -32,5 +40,45 @@ export const GET = async () => {
     if (error instanceof Error) {
       return NextResponse.json({ status: error.message }, { status: 400 });
     }
+  }
+};
+
+// 記事の新規作成API(POST)
+export const POST = async (request: NextRequest) => {
+  try {
+    const body = await request.json();
+    const {
+      title,
+      content,
+      thumbnailUrl,
+      postCategories,
+    }: CreatePostRequestBody = body;
+    const post = await prisma.post.create({
+      data: {
+        title,
+        content,
+        thumbnailUrl,
+        slug: title.toLowerCase().replace(/\s+/g, "-"), // titleからslugを生成
+      },
+    });
+
+    // SQLiteではcreateManyがサポートされていないため、Promise.allを使用
+    await Promise.all(
+      postCategories.map((category) =>
+        prisma.postCategory.create({
+          data: {
+            postId: post.id,
+            categoryId: category.categoryId,
+          },
+        })
+      )
+    );
+
+    return NextResponse.json({ status: "OK", post: post }, { status: 200 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ status: error.message }, { status: 400 });
+    }
+    return NextResponse.json({ status: "Unknown error" }, { status: 500 });
   }
 };
