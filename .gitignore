@@ -40,3 +40,8 @@ next-env.d.ts
 .env.local
 
 /app/generated/prisma
+
+# SQLite database files
+prisma/dev.db
+*.db
+*.db-journal
