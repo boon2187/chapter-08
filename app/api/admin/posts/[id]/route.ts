@@ -51,5 +51,6 @@ export const GET = async (
     if (error instanceof Error) {
       return NextResponse.json({ status: error.message }, { status: 400 });
     }
+    return NextResponse.json({ status: "Unknown error" }, { status: 500 });
   }
 };
