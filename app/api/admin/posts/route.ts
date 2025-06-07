@@ -81,3 +81,45 @@ export const POST = async (request: NextRequest) => {
     return NextResponse.json({ status: "Unknown error" }, { status: 500 });
   }
 };
+
+// 記事の更新API(PUT)
+export const PUT = async (
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) => {
+  try {
+    const { id } = params;
+    const body = await request.json();
+    const {
+      title,
+      content,
+      thumbnailUrl,
+      postCategories,
+    }: CreatePostRequestBody = body;
+    const post = await prisma.post.update({
+      where: { id: Number(id) },
+      data: { title, content, thumbnailUrl },
+    });
+
+    // 既存の関連を削除
+    await prisma.postCategory.deleteMany({
+      where: { postId: post.id },
+    });
+
+    // 記事のカテゴリーを更新
+    await Promise.all(
+      postCategories.map((category) =>
+        prisma.postCategory.create({
+          data: { postId: post.id, categoryId: category.categoryId },
+        })
+      )
+    );
+
+    return NextResponse.json({ status: "OK", post: post }, { status: 200 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ status: error.message }, { status: 400 });
+    }
+    return NextResponse.json({ status: "Unknown error" }, { status: 500 });
+  }
+};
