@@ -104,3 +104,22 @@ export const PUT = async (
     return NextResponse.json({ status: "Unknown error" }, { status: 500 });
   }
 };
+
+// 記事の削除API(DELETE)
+export const DELETE = async (
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) => {
+  try {
+    const { id } = params;
+    await prisma.post.delete({
+      where: { id: Number(id) },
+    });
+    return NextResponse.json({ status: "OK" }, { status: 200 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ status: error.message }, { status: 400 });
+    }
+    return NextResponse.json({ status: "Unknown error" }, { status: 500 });
+  }
+};
