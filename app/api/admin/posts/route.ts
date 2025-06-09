@@ -53,27 +53,32 @@ export const POST = async (request: NextRequest) => {
       thumbnailUrl,
       postCategories,
     }: CreatePostRequestBody = body;
-    const post = await prisma.post.create({
-      data: {
-        title,
-        content,
-        thumbnailUrl,
-      },
+
+    // DBへの保存をトランザクションでまとめて実行
+    const result = await prisma.$transaction(async (tx) => {
+      const post = await tx.post.create({
+        data: {
+          title,
+          content,
+          thumbnailUrl,
+        },
+      });
+      // SQLiteではcreateManyがサポートされていないため、Promise.allを使用
+      await Promise.all(
+        postCategories.map((category) =>
+          tx.postCategory.create({
+            data: {
+              postId: post.id,
+              categoryId: category.categoryId,
+            },
+          })
+        )
+      );
+
+      return post;
     });
 
-    // SQLiteではcreateManyがサポートされていないため、Promise.allを使用
-    await Promise.all(
-      postCategories.map((category) =>
-        prisma.postCategory.create({
-          data: {
-            postId: post.id,
-            categoryId: category.categoryId,
-          },
-        })
-      )
-    );
-
-    return NextResponse.json({ status: "OK", post: post }, { status: 200 });
+    return NextResponse.json({ status: "OK", post: result }, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ status: error.message }, { status: 400 });
