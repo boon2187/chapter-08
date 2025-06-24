@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Post, PostCategory, Category } from "@prisma/client";
+import Link from "next/link";
 
 type PostWithCategories = Post & {
   postCategories: (PostCategory & { category: Category })[];
@@ -33,7 +34,11 @@ export default function AdminHome() {
       <ul className="list-none p-0">
         {posts.map((post) => (
           <li key={post.id} className="border-b border-gray-200 mb-6 pb-6">
-            <div className="font-bold text-xl">{post.title}</div>
+            <Link href={`/admin/posts/${post.id}`}>
+              <div className="font-bold text-xl hover:underline">
+                {post.title}
+              </div>
+            </Link>
             <div className="text-gray-500 text-base">
               {new Date(post.createdAt).toLocaleDateString("ja-JP", {
                 year: "numeric",
